@@ -1,6 +1,36 @@
 const User = require("../models/customer.model.js");
-
+const Login = require("../models/login.model")
 // Create and Save a new Customer
+
+
+// Create a Customer
+
+exports.login = (req, res) => {
+
+if (!req.body) {
+  res.status(400).send({
+    message: "Content can not be empty!"
+  });
+}
+
+
+const loginData = new Login({
+  email: req.body.email,
+  password:req.body.password
+});
+  // Save Customer in the database
+  Login.login(loginData, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Customer."
+      });
+    else res.send(data);
+  });
+
+}
+
+
 exports.create = (req, res) => {
   // Validate request
   console.log(JSON.stringify(req.headers));
@@ -10,7 +40,9 @@ exports.create = (req, res) => {
     });
   }
 
-  // Create a Customer
+  
+
+
   const user = new User({
     email: req.body.email,
     name: req.body.name,
@@ -22,8 +54,6 @@ exports.create = (req, res) => {
   });
 
 
-
-  User.login(user)
 
   // Save Customer in the database
   User.create(user, (err, data) => {

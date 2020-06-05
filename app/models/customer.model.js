@@ -12,6 +12,8 @@ const User = function(user) {
   this.createdDate = user.createdDate;
 };
 
+
+
 User.create = (newUser, result) => {
   sql.query("INSERT INTO users SET ?", newUser, (err, res) => {
     if (err) {
