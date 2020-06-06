@@ -33,10 +33,14 @@ const loginData = new Login({
 
 exports.create = (req, res) => {
   // Validate request
-  console.log(JSON.stringify(req.headers));
+  console.log(req.headers.token);
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
+    });
+  }else if(!req.headers.token){
+    res.status(401).send({
+      message: "unauthorized"
     });
   }
 

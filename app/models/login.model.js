@@ -1,4 +1,5 @@
 const sql = require("./db.js");
+var jwt = require('jsonwebtoken');
 
 const Login = function(user) {
     this.email = user.email;
@@ -9,15 +10,21 @@ const Login = function(user) {
     console.log(newUser.email);
 
     
-    sql.query(`SELECT * FROM users WHERE (email = "${newUser.email}" AND password ="${newUser.password}")`, (err, res) => {
+    sql.query(`SELECT email,name,phone,active,profileImg FROM users WHERE (email = "${newUser.email}" AND password ="${newUser.password}")`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
         return;
       }
-  
-      console.log("created customer: ", { data:res,status: 200, message:"login successful" });
-      result(null, { data:res,status: 200, message:"login successful" });
+      if(res.length != 0){
+        console.log(res) 
+        const jwtToken  = jwt.sign({res}, 'shhhhh')
+        // console.log("created customer: ", { data:res});
+        result(null, { token:jwtToken,status: 200, message:"login successful" });
+      }else{
+        result(null, { message:"invalid user" });
+      }
+     
     });
   }
 
