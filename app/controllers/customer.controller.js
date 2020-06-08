@@ -1,9 +1,71 @@
 const User = require("../models/customer.model.js");
-const Login = require("../models/login.model")
+const Login = require("../models/login.model");
+const sentimentAnalysis = require("../models/sentiment.modal");
+const cbml= require("../models/cbml.modal")
 // Create and Save a new Customer
 
 
 // Create a Customer
+
+exports.cbmlfn = (req, res) => {
+
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+  
+  
+  const CBML = new cbml({
+    selectedvalue : req.body.selectedvalue,
+    pid : req.body.pid,
+    activecontext :req.body.activecontext,
+    cbmltoken : req.body.cbmltoken
+  });
+
+  
+  console.log(req.body)
+    // Save Customer in the database
+    cbml.cbmlfn(CBML, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the Customer."
+        });
+      else res.send(data);
+    });
+  
+  }
+
+
+
+exports.sentimentAnaly = (req, res) => {
+
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+  
+  
+  const sentimentanalysis = new sentimentAnalysis({
+    sentence: req.body.sentence
+  });
+
+    // Save Customer in the database
+    sentimentAnalysis.sentimentAnaly(sentimentanalysis, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the Customer."
+        });
+      else res.send(data);
+    });
+  
+  }
+
+
+
 
 exports.login = (req, res) => {
 

@@ -10,7 +10,7 @@ const Login = function(user) {
     console.log(newUser.email);
 
     
-    sql.query(`SELECT email,name,phone,active,profileImg FROM users WHERE (email = "${newUser.email}" AND password ="${newUser.password}")`, (err, res) => {
+    sql.query(`SELECT email,name,phone,active,profileImg FROM users WHERE (parentcontext = "${newUser.parentcontext}" AND activecontext = "${newUser.activecontext}" AND password ="${newUser.activecontext}")`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);

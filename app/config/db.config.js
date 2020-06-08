@@ -2,5 +2,5 @@ module.exports = {
   HOST: "localhost",
   USER: "root",
   PASSWORD: "password",
-  DB: "iTsk"
+  DB: "cbmlDB"
 };

@@ -1,6 +1,10 @@
 module.exports = app => {
   const customers = require("../controllers/customer.controller.js");
 
+  app.post("/cbml",customers.cbmlfn);
+
+  app.post("/sentiment",customers.sentimentAnaly);
+
   app.post("/login",customers.login);
   // Create a new Customer
   app.post("/register", customers.create);
